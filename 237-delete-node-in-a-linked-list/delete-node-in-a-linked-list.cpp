@@ -9,10 +9,10 @@
 class Solution {
 public:
     void deleteNode(ListNode* node) {
-     ListNode *t=node ->next;
-    node->next=t->next;
-    node ->val=t->val;
-    delete(t);
+        ListNode *t=node;
+        t->val=node->next->val;
+        t->next=node->next->next;
+        // delete(t->next);
         
     }
 };
