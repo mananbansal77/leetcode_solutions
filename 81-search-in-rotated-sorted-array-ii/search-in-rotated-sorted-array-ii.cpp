@@ -1,35 +1,46 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int l = 0;
-        int h = nums.size() - 1;
+        if(nums.size()==1&&nums[0]==target)
+        return true;
+      if(nums.size()==1&&nums[0]!=target)
+      return false;
 
-        while (l <= h) {
-            int mid = l + (h - l) / 2;
-
-            if (nums[mid] == target) {
-                return true;
-            }
-            if(nums[l]==nums[mid]&&nums[h]==nums[mid])
+        int low=0;
+        int high=nums.size()-1;
+        while(low<=high)
+        {
+               while (low < high && nums[low] == nums[low + 1]) low++;
+            while (low < high && nums[high] == nums[high - 1]) high--;
+            int mid=(high+low)/2;
+            if(nums[mid]==target)
+            return true;
+            // if(nums[low]==nums[mid]&&nums[mid]==nums[high])
+            // {
+            //     low++;
+            //     high--;
+            //     continue;
+            // }
+            else if(nums[mid]<nums[high])
             {
-                l++;
-                h--;
-                continue;
-            }
-            // Left half is sorted
-            if (nums[l] <=nums[mid]) {
-                if (nums[l] <= target && target < nums[mid]) {
-                    h = mid - 1;
-                } else {
-                    l = mid + 1;
+                if(nums[mid]<target&&nums[high]>=target)
+                {
+                    low=mid+1;
+                }
+                else
+                {
+                    high=mid-1;
                 }
             }
-            // Right half is sorted
-            else {
-                if (nums[mid] < target && target <= nums[h]) {
-                    l = mid + 1;
-                } else {
-                    h = mid - 1;
+            else
+            {
+                if(nums[low]<=target&&target<nums[mid])
+                {
+                    high=mid-1;
+                }
+                else
+                {
+                    low=mid+1;
                 }
             }
         }
